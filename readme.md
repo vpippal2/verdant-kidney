@@ -4,7 +4,7 @@
 In this repository you will find a solution with some of the tools we use on daily basis.
 bellow a list for your reference
 
-* Nancyfx : nancyfx/nancy
+*[Nancyfx](https://github.com/nancyFx/Nancy)
 
 in this case we are using a simple json store to store data, it will be enough for this excersise, but feel free to replace it with any tool you feel used to work with.
 
