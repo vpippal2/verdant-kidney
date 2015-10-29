@@ -5,6 +5,7 @@ In this repository you will find a solution with some of the tools we use on dai
 bellow a list for your reference
 
 *[Nancyfx](https://github.com/nancyFx/Nancy)
+*[Nunit](http://www.nunit.org/)
 
 in this case we are using a simple json store to store data, it will be enough for this excersise, but feel free to replace it with any tool you feel used to work with.
 
@@ -18,5 +19,20 @@ in this case we are using a simple json store to store data, it will be enough f
 4. Remove stock from the inventory
 
 Along the way you may encounter code that may need to be fixed, please comment on each of them on git commit or directly on code whatever way fit your style of development.
+
+##Workflow
+
+1. Please fork this repository under your github account.
+2. Clone it on your machine.
+3. To work on it you can use one of these tools:
+	* [Visual Studio 2013 and above] (https://www.visualstudio.com/en-us/downloads/download-visual-studio-vs.aspx)
+	* [Visual Studio Code] (https://code.visualstudio.com/docs?dv=win)
+	* [Monodevelop/Xamarin Studio] (http://www.monodevelop.com/)
+4. Commit and push to your master as often as you can, we care a lot about your decision making process even more than code delivered.
+5. If you think it will clarify your work feel free to add documentation, or comments on any form you see fit inside the project, we deleted many commnets that this piece of code had to spice things up a bit :smiling_imp:.
+6. If you are used to write tests, please add them on Test project on this solution, if you are more used to work with other testing framework, please change it and use the one you want.
+
+
+
 
 >Good luck, *Looking forward for your solution.*
