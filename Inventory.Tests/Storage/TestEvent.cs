@@ -1,7 +1,9 @@
-﻿using Inventory.Messaging;
+﻿using System;
+using Inventory.Messaging;
 
 namespace Inventory.Tests.Storage
 {
+  [Serializable]
   public class TestEvent:Event
   {
     public readonly string Data;

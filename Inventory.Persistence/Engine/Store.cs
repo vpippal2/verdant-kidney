@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Biggy.Core;
+
 using Inventory.Messaging;
 using Inventory.Persistence.Exceptions;
 using Inventory.Persistence.Models;
@@ -11,20 +13,23 @@ namespace Inventory.Persistence.Engine
   public class Store : IStore
   {    
     private readonly IDataStore<EventDescriptor> _db;
+    private readonly ISerializer _serializer;
 
-    public Store( IDataStore<EventDescriptor> db)
+    public Store( IDataStore<EventDescriptor> db, ISerializer serializer)
     {
+      _serializer = serializer;
       _db = db;            
     }
 
     public void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion)
-    {      
-      var currentVersion=0;
-      var eventDescriptors = GetEventsForAggregate(aggregateId);
+    {
+      var myDump = new List<EventDescriptor>();
 
-      if(eventDescriptors.Count>0) currentVersion= eventDescriptors.Max().Version;
-
-      if(currentVersion != expectedVersion && expectedVersion != -1) throw new ConcurrencyException();      
+      var currentVersion = _db.TryLoadData().Exists(e=>e.Id== aggregateId) ?
+              _db.TryLoadData().Where(e => e.Id == aggregateId).Max(e=>e.Version)             
+             : 0;
+      
+      if(currentVersion != expectedVersion && expectedVersion != -1) throw new Concurrency();      
       
       var i = expectedVersion;
       
@@ -32,13 +37,23 @@ namespace Inventory.Persistence.Engine
       {
         i++;
         @event.Version = i;
-        _db.Add(new EventDescriptor(aggregateId, @event, i));           
-      }     
+        myDump.Add(new EventDescriptor(aggregateId, _serializer.Serialize(@event), i));           
+      }
+      _db.Add(myDump);
+
     }     
 
     public List<Event> GetEventsForAggregate(Guid aggregateId)
-    {      
-      return _db.TryLoadData().Where(e => e.Id == aggregateId).Select(e => e.EventData).ToList();      
+    {
+      var eventDescriptors = _db.TryLoadData().Where(e => e.Id == aggregateId).ToList();
+
+      if (eventDescriptors.Count() <= 0) throw new AggregateNotFound();
+
+      var events = new List<Event>();
+      foreach (var record in eventDescriptors)
+        events.Add(_serializer.Deserialize(record.EventData));
+
+      return events;
     }
     
   }
