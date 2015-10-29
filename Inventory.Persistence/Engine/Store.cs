@@ -1,29 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using Inventory.Messaging;
 using System.Linq;
+using Biggy.Core;
+using Inventory.Messaging;
+using Inventory.Persistence.Exceptions;
+using Inventory.Persistence.Models;
 
 namespace Inventory.Persistence.Engine
 {
   public class Store : IStore
-  {
-    private readonly IEventPublisher _publisher;
-    private readonly Database _db;
+  {    
+    private readonly IDataStore<EventDescriptor> _db;
 
-    public Store(IEventPublisher publisher)
+    public Store( IDataStore<EventDescriptor> db)
     {
-      _db = new Database();
-      _publisher = publisher;
+      _db = db;            
     }
 
-    public void SaveEvents(Guid aggregateId, IEnumerable<Messaging.Event> events, int expectedVersion)
-    {
+    public void SaveEvents(Guid aggregateId, IEnumerable<Event> events, int expectedVersion)
+    {      
+      var currentVersion=0;
+      var eventDescriptors = GetEventsForAggregate(aggregateId);
+
+      if(eventDescriptors.Count>0) currentVersion= eventDescriptors.Max().Version;
+
+      if(currentVersion != expectedVersion && expectedVersion != -1) throw new ConcurrencyException();      
       
-    }
+      var i = expectedVersion;
+      
+      foreach (var @event in events)
+      {
+        i++;
+        @event.Version = i;
+        _db.Add(new EventDescriptor(aggregateId, @event, i));           
+      }     
+    }     
 
     public List<Event> GetEventsForAggregate(Guid aggregateId)
-    {
-      return (from e in _db.Events where e.Id == aggregateId select e.EventData).ToList();      
+    {      
+      return _db.TryLoadData().Where(e => e.Id == aggregateId).Select(e => e.EventData).ToList();      
     }
+    
   }
 }

@@ -6,7 +6,9 @@ namespace Inventory.Persistence.Modules
   {
     public HomeController():base("/")
     {
-      Get["/"] = _ => "hi there";
+      Get["/{aggregate:guid}"] = _ => "hi there";
+
+      Post["/{aggregate:guid}"] = _ => "hi there";
     }
   }
 }
