@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -32,27 +32,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Biggy, Version=1.0.5468.21366, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Biggy.Core.0.1.0.1\lib\net40\Biggy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Biggy.Data.Json, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Biggy.Data.Json.0.1.0.1\lib\net40\Biggy.Data.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Inflector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Inflector.1.0.0.0\lib\net45\Inflector.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="Biggy, Version=1.0.5468.21366, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Biggy.Core.0.1.0.1\lib\net40\Biggy.dll</HintPath>
+    </Reference>
+    <Reference Include="Biggy.Data.Json, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Biggy.Data.Json.0.1.0.1\lib\net40\Biggy.Data.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Inflector, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\Inflector.1.0.0.0\lib\net45\Inflector.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,11 +60,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Inventory.Persistence\Inventory.Persistence.csproj">
-      <Project>{d133ae37-6a46-4767-bfb8-8de44233a5fb}</Project>
+      <Project>{D133AE37-6A46-4767-BFB8-8DE44233A5FB}</Project>
       <Name>Inventory.Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\Inventory\Inventory.csproj">
-      <Project>{89b6fda7-1c13-4808-aa21-a191d0e3fe34}</Project>
+      <Project>{89B6FDA7-1C13-4808-AA21-A191D0E3FE34}</Project>
       <Name>Inventory</Name>
     </ProjectReference>
   </ItemGroup>

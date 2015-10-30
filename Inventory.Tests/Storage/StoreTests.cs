@@ -18,10 +18,11 @@ namespace Inventory.Tests.Storage
   public class StoreTests
   {
     
-    private IDataStore<EventDescriptor> _db;
-    private Guid _id = Guid.NewGuid();
-    private IStore _sut;
-    private ISerializer _serializer;
+    IDataStore<EventDescriptor> _db;
+    Guid _id = Guid.NewGuid();
+    IStore _sut;
+    ISerializer _serializer;
+
     [SetUp]
     public void Setup()
     {
@@ -47,15 +48,16 @@ namespace Inventory.Tests.Storage
     [Test]
     public void Store_can_return_eventList()
     {
-      var sent= GetDummyEvents(678000);
+	  var sent= GetDummyEvents(678000).ToList ();
       _sut.SaveEvents(_id, sent, -1);
 
       var retrieved = _sut.GetEventsForAggregate(_id);
-
-      Assert.AreEqual(sent.Count(), retrieved.Count());
+	  
+	  Assert.AreEqual (sent.Count(), retrieved.Count());
       var expected= sent.Max(e=>e.Version);
       var actual= retrieved.Max(e=>e.Version);
-      Assert.AreEqual(expected,actual );
+      
+	  Assert.AreEqual(expected,actual );
     }
 
     [Test]
@@ -79,13 +81,10 @@ namespace Inventory.Tests.Storage
       var list= _sut.GetEventsForAggregate(_id);
 
       foreach (var item in list)
-      {
-        Assert.IsInstanceOf<TestEvent>(item);
-      }
-      
+      	Assert.IsInstanceOf<TestEvent>(item);
     }
 
-    private IEnumerable<Event> GetDummyEvents(int quantity)
+    static IEnumerable<Event> GetDummyEvents(int quantity)
     {
       for (int i = 0; i < quantity; i++)
         yield return new TestEvent("this is " + i +" a demo", i);      

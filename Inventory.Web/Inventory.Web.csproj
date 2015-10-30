@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>
-    </ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{60E0AD85-E806-4272-82A1-374C63478928}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
@@ -41,18 +38,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Nancy, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nancy.1.3.0\lib\net40\Nancy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Nancy.Hosting.Aspnet, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nancy.Hosting.Aspnet.1.3.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="Nancy">
+      <HintPath>..\packages\Nancy.1.4.0\lib\net40\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Aspnet">
+      <HintPath>..\packages\Nancy.Hosting.Aspnet.1.4.0\lib\net40\Nancy.Hosting.Aspnet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -62,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -90,6 +85,11 @@
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>
+    <MonoDevelop>
+      <Properties>
+        <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+      </Properties>
+    </MonoDevelop>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
