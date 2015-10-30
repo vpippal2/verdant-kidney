@@ -83,6 +83,30 @@ namespace Inventory.Tests.Storage
       foreach (var item in list)
       	Assert.IsInstanceOf<TestEvent>(item);
     }
+	
+	[Test]
+	public void wrong_initial_version_should_throw_concurrency_exception()
+	{
+		var sent = GetDummyEvents (100);
+		_sut.SaveEvents (_id,sent,-1);
+		var outband = GetDummyEvents (10);
+		Assert.Throws<Concurrency> (()=> _sut.SaveEvents (_id,outband,-1));
+	}
+
+		[Test]
+		public void an_event_stream_can_be_appened()
+		{
+			var sent = GetDummyEvents (100);
+			_sut.SaveEvents (_id,sent,-1);
+			var outband = GetDummyEvents (10);
+
+			var current = sent.Max (e => e.Version);
+			_sut.SaveEvents (_id,outband,current);
+			var actual = _sut.GetEventsForAggregate (_id);
+
+			Assert.AreEqual(sent.Count()+ outband.Count(),actual.Count());
+
+		}
 
     static IEnumerable<Event> GetDummyEvents(int quantity)
     {

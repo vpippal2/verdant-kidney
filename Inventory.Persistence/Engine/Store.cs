@@ -25,11 +25,11 @@ namespace Inventory.Persistence.Engine
     {
       var myDump = new List<EventDescriptor>();
 
-      var currentVersion = _db.TryLoadData().Exists(e=>e.Id== aggregateId) ?
+      var currentVersion = _db.TryLoadData().Any(e=>e.Id== aggregateId) ?
               _db.TryLoadData().Where(e => e.Id == aggregateId).Max(e=>e.Version)             
              : 0;
-      
-      if(currentVersion != expectedVersion && expectedVersion != -1) throw new Concurrency();      
+	  if (currentVersion != 0 && expectedVersion == -1) throw new Concurrency (); 
+      if (currentVersion != expectedVersion && expectedVersion != -1) throw new Concurrency();      
       
       var i = expectedVersion;
       
@@ -40,16 +40,16 @@ namespace Inventory.Persistence.Engine
         myDump.Add(new EventDescriptor(aggregateId, _serializer.Serialize(@event), i));           
       }
       _db.Add(myDump);
-
     }     
 
     public List<Event> GetEventsForAggregate(Guid aggregateId)
     {
+	  var events = new List<Event>();
       var eventDescriptors = _db.TryLoadData().Where(e => e.Id == aggregateId).ToList();
 
-      if (eventDescriptors.Count() <= 0) throw new AggregateNotFound();
+	  if (!eventDescriptors.Any())throw new AggregateNotFound ();
 
-      var events = new List<Event>();
+      
       foreach (var record in eventDescriptors)
         events.Add(_serializer.Deserialize(record.EventData));
 

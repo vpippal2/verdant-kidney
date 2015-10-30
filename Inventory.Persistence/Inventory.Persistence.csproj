@@ -89,6 +89,7 @@
     <Compile Include="Modules\HomeController.cs" />
     <Compile Include="PersistenceBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Engine\JsonSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Store\" />
