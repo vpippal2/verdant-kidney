@@ -1,5 +1,4 @@
 ﻿using Inventory.Messaging;
-using Newtonsoft.Json;
 
 namespace Inventory.Persistence.Engine
 {

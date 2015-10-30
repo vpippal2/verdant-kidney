@@ -53,7 +53,7 @@ namespace Inventory.Tests.Storage
 
       var retrieved = _sut.GetEventsForAggregate(_id);
 	  
-	  Assert.AreEqual (sent.Count(), retrieved.Count());
+	  Assert.AreEqual (sent.Count , retrieved.Count);
       var expected= sent.Max(e=>e.Version);
       var actual= retrieved.Max(e=>e.Version);
       
@@ -73,7 +73,7 @@ namespace Inventory.Tests.Storage
 
 
     [Test]
-    public void events_can_be_deserialized()
+    public void Events_can_be_deserialized()
     {
       var sent = GetDummyEvents(100000);
       _sut.SaveEvents(_id, sent, -1);
@@ -85,7 +85,7 @@ namespace Inventory.Tests.Storage
     }
 	
 	[Test]
-	public void wrong_initial_version_should_throw_concurrency_exception()
+	public void Wrong_initial_version_should_throw_concurrency_exception()
 	{
 		var sent = GetDummyEvents (100);
 		_sut.SaveEvents (_id,sent,-1);
@@ -94,7 +94,7 @@ namespace Inventory.Tests.Storage
 	}
 
 		[Test]
-		public void an_event_stream_can_be_appened()
+		public void An_event_stream_can_be_appened()
 		{
 			var sent = GetDummyEvents (100);
 			_sut.SaveEvents (_id,sent,-1);
@@ -104,8 +104,7 @@ namespace Inventory.Tests.Storage
 			_sut.SaveEvents (_id,outband,current);
 			var actual = _sut.GetEventsForAggregate (_id);
 
-			Assert.AreEqual(sent.Count()+ outband.Count(),actual.Count());
-
+			Assert.AreEqual(sent.Count()+ outband.Count(),actual.Count);
 		}
 
     static IEnumerable<Event> GetDummyEvents(int quantity)
