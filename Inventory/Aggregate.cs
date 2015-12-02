@@ -32,8 +32,8 @@ namespace Inventory
     }
     
     private void ApplyChange(Event @event, bool isNew)
-    {
-      ((dynamic)this).Apply(@event);
+    {      
+      ((dynamic)this).Apply((dynamic)@event);
       if (isNew) _changes.Add(@event);
     }
   }
