@@ -8,7 +8,7 @@ bellow a list for your reference
 * [Nunit](http://www.nunit.org/).
 * [Git](https://git-scm.com/)
 
-in this case we are using a simple json store to store data, it will be enough for this excersise, but feel free to replace it with any tool you feel used to work with.
+in this case we are using a simple json file to store data, it will be enough for this excersise, but feel free to replace it with any tool you feel used to work with.
 
 ## Tasks
 

@@ -15,7 +15,7 @@ namespace Inventory.Persistence.Modules
 
 			Get ["/{aggregate:guid}"] = _ => {
 				var events = store.GetEventsForAggregate (Guid.Parse (_.aggregate)).ToList<Event>();
-				return  Response.AsOData(events);        
+				return  events;        
 			};
 
 			Post ["/{aggregate:guid}"] = _ => 200;
