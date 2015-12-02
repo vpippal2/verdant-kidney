@@ -22,10 +22,33 @@ namespace Inventory.Tests.Domain
       ApplyChange(new FakeCreated(id, name));
     }
 
+    public void ChangeName(string newName)
+    {
+      if (string.IsNullOrEmpty(newName)) throw new ArgumentException("newName cannot be null");
+      ApplyChange(new FakeRenamed(_id, newName));
+    }
+
     public void Apply(FakeCreated e)
     {
       _id = e.Id;
       Name = e.Name;
+    }
+
+    public void Apply(FakeRenamed e)
+    {
+      Name = e.Name;
+    }
+  }
+
+  public class FakeRenamed : Event
+  {
+  public readonly Guid Id;
+    public readonly string Name;
+
+    public FakeRenamed(Guid id, string name)
+    {
+      Id = id;
+      Name = name;
     }
   }
 

@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Inventory.Persistence\Inventory.Persistence.csproj">
-      <Project>{D133AE37-6A46-4767-BFB8-8DE44233A5FB}</Project>
+      <Project>{d133ae37-6a46-4767-bfb8-8de44233a5fb}</Project>
       <Name>Inventory.Persistence</Name>
     </ProjectReference>
     <ProjectReference Include="..\Inventory\Inventory.csproj">

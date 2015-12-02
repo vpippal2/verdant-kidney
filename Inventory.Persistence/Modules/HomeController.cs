@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Inventory.Messaging;
-
+using Inventory.Persistence.Exceptions;
+using Inventory.Persistence.Models;
 using Nancy;
 using Nancy.OData;
+using Nancy.ModelBinding;
+using System.Dynamic;
 
 namespace Inventory.Persistence.Modules
 {
@@ -14,11 +16,34 @@ namespace Inventory.Persistence.Modules
 		{     
 
 			Get ["/{aggregate:guid}"] = _ => {
-				var events = store.GetEventsForAggregate (Guid.Parse (_.aggregate)).ToList<Event>();
-				return  events;        
+        
+        dynamic events= new ExpandoObject();
+
+        try
+        {
+          events.Result = store.GetEventsForAggregate(Guid.Parse(_.aggregate)).ToList<Event>();
+        }        
+        catch (AggregateNotFound ex)
+        {
+          events.Error = ex.GetType();
+          events.StatuCode = 404;
+          events.Message = ex.Message;
+        }
+        catch (Exception ex)
+        {
+          events.Error = ex.GetType();
+          events.StatuCode = 500;
+          events.Message = ex.Message;
+        }
+				
+				return events;        
 			};
 
-			Post ["/{aggregate:guid}"] = _ => 200;
+      Post["/{aggregate:guid}"] = _ => 
+      {
+        var eventList = this.Bind<RequestList>();
+        return 200;
+      };
 		}
 	}
 }

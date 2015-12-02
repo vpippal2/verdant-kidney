@@ -105,7 +105,7 @@ namespace Inventory.Tests.Storage
 			var actual = _sut.GetEventsForAggregate (_id);
 
 			Assert.AreEqual(sent.Count()+ outband.Count(),actual.Count);
-		}
+		}   
 
     static IEnumerable<Event> GetDummyEvents(int quantity)
     {

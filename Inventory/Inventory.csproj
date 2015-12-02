@@ -43,6 +43,7 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="IStore.cs" />
     <Compile Include="Messaging\Message.cs" />
+    <Compile Include="MiniBan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Messaging\Event.cs" />
     <Compile Include="Messaging\Command.cs" />

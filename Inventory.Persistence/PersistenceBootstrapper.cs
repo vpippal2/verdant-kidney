@@ -1,8 +1,11 @@
 ﻿using System;
 using System.IO;
+
 using Biggy.Core;
 using Biggy.Data.Json;
+
 using Inventory.Persistence.Models;
+
 using Nancy;
 using Nancy.TinyIoc;
 

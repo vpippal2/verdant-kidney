@@ -1,8 +1,11 @@
 ﻿using System;
+
 using Biggy.Data.Json;
+
 using Inventory.Persistence.Engine;
 using Inventory.Persistence.Exceptions;
 using Inventory.Persistence.Models;
+
 using NUnit.Framework;
 
 namespace Inventory.Tests.Domain
@@ -66,6 +69,12 @@ namespace Inventory.Tests.Domain
        _sut.Save(fake, -1);
 
        fake.ChangeName("Fake Can Be Just As Good");
+
+       _sut.Save(fake, 0);
+
+       var db = _sut.GetById(newId);
+
+       Assert.AreEqual("Fake Can Be Just As Good", db.Name);
     }
 
   }
