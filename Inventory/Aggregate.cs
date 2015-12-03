@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Inventory.Messaging;
+using Inventory.Infraestructure;
 
 namespace Inventory
 {
@@ -33,7 +34,7 @@ namespace Inventory
     
     private void ApplyChange(Event @event, bool isNew)
     {      
-      ((dynamic)this).Apply((dynamic)@event);
+       this.AsDynamic().Apply((dynamic)@event);
       if (isNew) _changes.Add(@event);
     }
   }

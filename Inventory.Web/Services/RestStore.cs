@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-namespace Inventory.Web
+namespace Inventory.Web.Services
 {
   public class RestStore:IStore
   {

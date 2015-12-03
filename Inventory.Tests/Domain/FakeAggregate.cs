@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Inventory.Messaging;
-using Inventory.Persistence.Models;
+
 namespace Inventory.Tests.Domain
 {
   public class FakeAggregate:AggregateRoot
@@ -28,13 +27,13 @@ namespace Inventory.Tests.Domain
       ApplyChange(new FakeRenamed(_id, newName));
     }
 
-    public void Apply(FakeCreated e)
+    private void Apply(FakeCreated e)
     {
       _id = e.Id;
       Name = e.Name;
     }
 
-    public void Apply(FakeRenamed e)
+    private void Apply(FakeRenamed e)
     {
       Name = e.Name;
     }
