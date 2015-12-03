@@ -39,6 +39,7 @@
     <Compile Include="Handlers\InventoryCommandHandlers.cs" />
     <Compile Include="ICommandSender.cs" />
     <Compile Include="IEventPublisher.cs" />
+    <Compile Include="Infraestructure\PrivateReflectionDynamicObjectExtensions.cs" />
     <Compile Include="Infraestructure\Reflector.cs" />
     <Compile Include="InventoryItem.cs" />
     <Compile Include="IRepository.cs" />

@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Dynamic;
+
 using Inventory.Messaging;
 using Inventory.Persistence.Exceptions;
 using Inventory.Persistence.Models;
+
 using Nancy;
-using Nancy.OData;
 using Nancy.ModelBinding;
-using System.Dynamic;
 
 namespace Inventory.Persistence.Modules
 {
