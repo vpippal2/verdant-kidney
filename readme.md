@@ -12,7 +12,7 @@ in this case we are using a simple json file to store data, it will be enough fo
 
 ## Tasks
 
-###Finish inventory implementation by creating a web interface for this api to:
+###Implement a web interface for this api to:
 
 1. Create a new inventory Item
 2. Archive an inventory Item
