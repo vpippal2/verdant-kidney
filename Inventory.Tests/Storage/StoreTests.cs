@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 
 using Biggy.Core;
 using Biggy.Data.Json;
@@ -19,17 +20,20 @@ namespace Inventory.Tests.Storage
   {
     
     IDataStore<EventDescriptor> _db;
-    Guid _id = Guid.NewGuid();
+    readonly Guid _id = Guid.NewGuid();
     IStore _sut;
     ISerializer _serializer;
 
     [SetUp]
     public void Setup()
     {
-      _db = new JsonStore<EventDescriptor>();
-      _db.DeleteAll();    
-      _serializer= new JsonSerializer();
-      _sut = new Store( _db, _serializer);
+        // VP: 29.2.2016
+        // perhaps a mistake in JsonDbCore()
+        // JsonDbCore.GetDefaultDirectory() returns "" if app is not running from directory "Debug" or "Release"
+        _db = new JsonStore<EventDescriptor>(new JsonDbCore(".", "StoreTests"));
+        _db.DeleteAll();
+        _serializer = new JsonSerializer();
+        _sut = new Store(_db, _serializer);
     }
 
     [Test]

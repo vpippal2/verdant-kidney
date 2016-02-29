@@ -17,8 +17,11 @@ namespace Inventory.Tests.Domain
 
     [SetUp]
     public void Setup()
-    { 
-      _sut= new Repository<FakeAggregate>(new Store(new JsonStore<EventDescriptor>(), new JsonSerializer()));
+    {
+        // VP: 29.2.2016
+        // perhaps a mistake in JsonDbCore()
+        // JsonDbCore.GetDefaultDirectory() returns "" if app is not running from directory "Debug" or "Release" 
+        _sut = new Repository<FakeAggregate>(new Store(new JsonStore<EventDescriptor>(new JsonDbCore(".", "RepositoryTests")), new JsonSerializer()));
     }
 
     [Test]
