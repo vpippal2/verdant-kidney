@@ -4,11 +4,59 @@
     <title>Inventory add v1</title>
 </head>
 <body>
-    Add inventory
+    Cretae new inventory
     <form class="form-horizontal" action="/" method="post">
         <label>Name</label>
         <input type="text" name="name" placeholder="Enter a name" />
         <input type="submit" value="Add" />
     </form>
+    <p></p>
+<!--	
+    <form id="DeleteInv" method="put">
+        <label>Name</label>
+        <input type="submit" value="Delete" />
+        <input type="button" value="Delete But" onclick="fce()" />
+    </form>
+-->
+
+    Add inventory (tests)
+<form id="AddNumber">
+        <label>Number</label>
+        <input type="number" name="number" value="123" />
+        <input type="button" value="Add Number (PUT)" onclick="fce()"/>
+    </form>
+
+
+<script type="text/javascript">
+    // PUT method cannot be set directly to HTML form!!!!
+    function fce()
+    {
+        var number = window.AddNumber.number.value;
+        var newurl = '/qqq/' + number;
+        //alert("number:" + number);
+        alert("url:" + newurl);
+        window.AddNumber.action = newurl;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+                if (xhttp.responseType === "") {
+                    //alert(xhttp.response);
+                    document.body.innerHTML = xhttp.response;
+                } else
+                    alert(" just done respType=" + xhttp.responseType);
+
+            } else {
+                //alert("status:"+xhttp.status + "    reponsetype:"+ xhttp.responseType);
+            }
+        };
+        //xhttp.data = ""; // window.AddNumber.serializeToString();
+        //xhttp.dataType = "json";
+        xhttp.open("PUT", newurl, false);
+        xhttp.send();
+
+    }
+</script>
+
 </body>
 </html>
