@@ -16,7 +16,7 @@
         Modify inventory
         <form id="InvChange" method="post">
             <label>GUID</label>
-            <input type="text" name="guid_text" size="36" value="3869ed0b-949f-4211-a0f9-71a6e3987234" />
+            <input type="text" name="guid_text" size="36" value="" />
             <label>Version</label>
             <input type="number" name="version_text" value="0" />
             <br />
@@ -79,6 +79,9 @@
                     } else
                         alert(" just done respType=" + xhttp.responseType);
                 }
+                //else if (xhttp.status === 500) {
+                //        document.body.innerHTML = xhttp.response;
+                //}
             }
 
             function get_item_data() {
