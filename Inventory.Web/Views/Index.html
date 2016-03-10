@@ -1,62 +1,91 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Inventory add v1</title>
-</head>
-<body>
-    Cretae new inventory
-    <form class="form-horizontal" action="/" method="post">
-        <label>Name</label>
-        <input type="text" name="name" placeholder="Enter a name" />
-        <input type="submit" value="Add" />
-    </form>
-    <p></p>
-<!--	
-    <form id="DeleteInv" method="put">
-        <label>Name</label>
-        <input type="submit" value="Delete" />
-        <input type="button" value="Delete But" onclick="fce()" />
-    </form>
--->
+﻿
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Inventory test</title>
+    </head>
+    <body>
+        Cretae new inventory
+        <form class="form-horizontal" action="/" method="post">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter a name" />
+            <input type="submit" value="Create" />
+        </form>
+        <p></p>
 
-    Add inventory (tests)
-<form id="AddNumber">
-        <label>Number</label>
-        <input type="number" name="number" value="123" />
-        <input type="button" value="Add Number (PUT)" onclick="fce()"/>
-    </form>
+        Modify inventory
+        <form id="InvChange" method="post">
+            <label>GUID</label>
+            <input type="text" name="guid_text" size="36" value="3869ed0b-949f-4211-a0f9-71a6e3987234" />
+            <label>Version</label>
+            <input type="number" name="version_text" value="0" />
+            <br />
+            <label>Count</label>
+            <input type="number" name="number" value="1" />
+            <input type="submit" value=" + " onclick="change_count(true)" />
+            <input type="submit" value=" - " onclick="change_count(false)" />
+            <br />
+            <label>New name</label>
+            <input type="text" name="new_name" placeholder="Enter new name" value="" />
+            <input type="button" value="Rename" onclick="change_name()" />
+            <br />
+            <input type="button" value="Deactivate" onclick="change_status()" />
 
+        </form>
 
-<script type="text/javascript">
-    // PUT method cannot be set directly to HTML form!!!!
-    function fce()
-    {
-        var number = window.AddNumber.number.value;
-        var newurl = '/qqq/' + number;
-        //alert("number:" + number);
-        alert("url:" + newurl);
-        window.AddNumber.action = newurl;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
+        <script type="text/javascript">
+            // DELETE
+            function change_status() {
+                //var newurl = "/" + "3869ed0b-949f-4211-a0f9-71a6e3987234" + "/" + "33";
+                var newurl = get_item_data();
+                alert("DELETE url:" + newurl);
 
-                if (xhttp.responseType === "") {
-                    //alert(xhttp.response);
-                    document.body.innerHTML = xhttp.response;
-                } else
-                    alert(" just done respType=" + xhttp.responseType);
-
-            } else {
-                //alert("status:"+xhttp.status + "    reponsetype:"+ xhttp.responseType);
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = onreadystatechangeHandle(xhttp);
+                xhttp.open("DELETE", newurl, true);
+                xhttp.send();
+                return true;
             }
-        };
-        //xhttp.data = ""; // window.AddNumber.serializeToString();
-        //xhttp.dataType = "json";
-        xhttp.open("PUT", newurl, false);
-        xhttp.send();
 
-    }
-</script>
+            // RENAME
+            function change_name() {
+                //var newurl = "/" + "3869ed0b-949f-4211-a0f9-71a6e3987234" + "/" + "33";
+                var newurl = get_item_data();
+                alert("PUT url:" + newurl);
 
-</body>
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = onreadystatechangeHandle(xhttp);
+                xhttp.open("PUT", newurl, true);
+                // new name
+                var data = new FormData();
+                data.append("name", window.InvChange.new_name.value);
+                xhttp.send(data);
+                return true;
+            }
+
+            // ADD/REMOVE
+            function change_count(add) {
+                var newurl = (add ? "/Checkin/" : "/Checkout/") + get_item_data();
+                alert("url:" + newurl);
+                window.InvChange.action = newurl;
+                return true;
+            }
+
+
+            function onreadystatechangeHandle(xhttp) {
+                if (xhttp.readyState === 4 && xhttp.status === 200) {
+                    if (xhttp.responseType === "") {
+                        document.body.innerHTML = xhttp.response;
+                    } else
+                        alert(" just done respType=" + xhttp.responseType);
+                }
+            }
+
+            function get_item_data() {
+                return "/" + window.InvChange.guid_text.value + "/" + window.InvChange.version_text.value;
+            }
+
+        </script>
+
+    </body>
 </html>
