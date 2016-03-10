@@ -5,8 +5,18 @@ using Nancy;
 
 namespace Inventory.Web.Modules
 {
+/*    public class InventoryWebModelData
+    {
+        public bool Defined = false;
+        public Guid Id { get; set; }
+        public int Version { get; set; }
+    }
+*/
+
     public class HomeModule : NancyModule
     {
+
+
         private readonly MiniVan _bus = ServiceLocator.Bus;
 
         public HomeModule()
@@ -15,38 +25,32 @@ namespace Inventory.Web.Modules
 
             Post["/"] = _ =>
             {
-                _bus.Send(new CreateInventoryItem(Guid.NewGuid(), Request.Form.name));
+                Guid guid = Guid.NewGuid();
+                _bus.Send(new CreateInventoryItem(guid, Request.Form.name));
                 return View["index"];
             };
 
-
-            Put["/qqq/{nn:int}"] = _ =>
-            {
-                //return View["index"];
-                return "Put int:" + _.nn;
-            };
-
-
-            Put["/{guid:id}/{int:version}"] = _ =>
+            Put["/{id:guid}/{version:int}"] = _ =>
             {
                 _bus.Send(new RenameInventoryItem(_.id, Request.Form.name, _.version));
                 return View["index"];
             };
 
-            Delete["/{guid:id}/{int:version}"] = _ =>
+            Delete["/{id:guid}/{version:int}"] = _ =>
             {
                 _bus.Send(new DeactivateInventoryItem(_.id, _.version));
                 return View["index"];
             };
 
-            Post["/Checkin/{guid:id}/{int:version}"] = _ =>
+
+            Post["/Checkin/{id:guid}/{version:int}"] = _ =>
             {
                 _bus.Send(new CheckInItemsToInventory(_.id, Request.Form.number, _.version));
                 return View["index"];
             };
 
 
-            Post["/Checkout/{guid:id}/{int:version}"] = _ =>
+            Post["/Checkout/{id:guid}/{version:int}"] = _ =>
             {
                 _bus.Send(new RemoveItemsFromInventory(_.id, Request.Form.number, _.version));
                 return View["index"];
