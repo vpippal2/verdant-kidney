@@ -5,55 +5,66 @@ using Nancy;
 
 namespace Inventory.Web.Modules
 {
-/*    public class InventoryWebModelData
+    /// <summary>
+    /// Data to fill in HTML form
+    /// </summary>
+    public class InventoryWebModelData
     {
-        public bool Defined = false;
         public Guid Id { get; set; }
         public int Version { get; set; }
     }
-*/
+
 
     public class HomeModule : NancyModule
     {
-
 
         private readonly MiniVan _bus = ServiceLocator.Bus;
 
         public HomeModule()
         {
-            Get["/"] = _ => View["index"];
+            Get["/"] = _ => View["index", new InventoryWebModelData{Id = new Guid(), Version = -1}];
 
             Post["/"] = _ =>
             {
                 Guid guid = Guid.NewGuid();
                 _bus.Send(new CreateInventoryItem(guid, Request.Form.name));
-                return View["index"];
+                var model = new InventoryWebModelData {Id = guid, Version = 0};
+                return View["index", model];
             };
 
             Put["/{id:guid}/{version:int}"] = _ =>
             {
+                Guid guid = _.id;
+                int version = _.version;
                 _bus.Send(new RenameInventoryItem(_.id, Request.Form.name, _.version));
-                return View["index"];
+                var model = new InventoryWebModelData {Id = guid, Version = version + 1};
+                return View["index", model];
             };
 
             Delete["/{id:guid}/{version:int}"] = _ =>
             {
                 _bus.Send(new DeactivateInventoryItem(_.id, _.version));
-                return View["index"];
+                return View["index", new InventoryWebModelData()];
             };
 
 
             Post["/Checkin/{id:guid}/{version:int}"] = _ =>
             {
-                _bus.Send(new CheckInItemsToInventory(_.id, Request.Form.number, _.version));
-                return View["index"];
+                Guid guid = _.id;
+                int version = _.version;
+                _bus.Send(new CheckInItemsToInventory(guid, Request.Form.number, version));
+                var model = new InventoryWebModelData() {Id = guid, Version = version + 1};
+                return View["index", model];
             };
 
 
             Post["/Checkout/{id:guid}/{version:int}"] = _ =>
             {
-                _bus.Send(new RemoveItemsFromInventory(_.id, Request.Form.number, _.version));
-                return View["index"];
+                Guid guid = _.id;
+                int version = _.version;
+                _bus.Send(new RemoveItemsFromInventory(guid, Request.Form.number, version));
+                var model = new InventoryWebModelData() { Id = guid, Version = version + 1 };
+                return View["index", model];
             };
         }
     }

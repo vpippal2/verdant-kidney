@@ -1,24 +1,30 @@
-﻿using Inventory.Handlers;
+﻿using System;
+using System.IO;
+using Biggy.Core;
+using Biggy.Data.Json;
+using Inventory.Handlers;
 using Inventory.Messaging;
 using Inventory.Persistence;
+using Inventory.Persistence.Engine;
 using Inventory.Web.Services;
 using Nancy;
 using Nancy.Bootstrapper;
+using Nancy.TinyIoc;
 
 namespace Inventory.Web
 {
     // Set PersistenceBootstrapper as parrent to allow usage of "Inventory.Persistence" in Web project
     // NOTE: the object is created automaticaly (inherited is created while parent is not)
-    public class Bootstrapper: PersistenceBootstrapper //DefaultNancyBootstrapper
+    public class Bootstrapper : PersistenceBootstrapper // DefaultNancyBootstrapper
     {
-      protected override void ApplicationStartup(Nancy.TinyIoc.TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines)
-    {
-      Wiring.Wire();
-      base.ApplicationStartup(container, pipelines);
+        protected override void ApplicationStartup(Nancy.TinyIoc.TinyIoCContainer container, Nancy.Bootstrapper.IPipelines pipelines)
+        {
+            Wiring.Wire();
+            base.ApplicationStartup(container, pipelines);
+        }
     }
-  }
 
-  public static class Wiring
+    public static class Wiring
   {
     public static void Wire()
     {
